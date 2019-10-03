@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 32px;
+        }
+
+        h1 {
+            width: 100%;
+        }
+
+        button {
+            width: 150px;
+            font-size: 14px;
+            border-radius: 3px;
+            outline: none;
+            cursor: pointer;
+            box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14),0 3px 1px -2px rgba(0,0,0,0.12),0 1px 5px 0 rgba(0,0,0,0.2);
+            border: none;
+            line-height: 36px;
+            text-transform: uppercase;
+            padding: 0 16px;
+
+        }
+
+        header {
+            min-height: 200px;
+            background-color: #383535;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        section {
+            display: flex;
+        }
+
+        nav {
+            min-height: calc(100vh - (200px + 120px) );
+            background-color: #bbb;
+            flex: 1;
+            padding: 20px;
+        }
+
+        main {
+            min-height: 500px;
+            flex: 3;
+            padding: 10px;
+        }
+
+        footer {
+            min-height: 120px;
+            background-color: #383535;
+            color: white;
+            font-size: 22px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            section {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- CHALLENGE 1: Customizable Webpage
+    Create a webpage that lets you cycle through different colours and fonts for sections of a page whenever the user clicks a button.
+    For example, you might have a traditional 3-column layout with a navbar & footer.
+    In each of those layout sections should be a button that lets you cycle through some colours for the background, and
+    a button that lets you cycle through some fonts for the text. 
+
+    You can grab some good layout starter code here:
+    https://www.w3schools.com/css/css_website_layout.asp 
+
+    You can check out some good web colours here:
+    https://www.w3schools.com/html/html_colors.asp
+
+    You can check out easy-to-use web fonts here:
+    https://fonts.google.com/
+
+    You should be able to loop through arrays for colours & arrays for fonts for each section of the layout,
+    just by clicking a button. -->
+
+    <header>
+        <h1>This is a Header</h1>
+        <button class="btn_colr" onclick="rndBGColor(this)">Random Colour</button>
+        <button class="btn_font" onclick="rndFont(this)">Random Font</button>
+    </header>
+
+    <section>
+        <nav>
+            <h1>This is a Nav</h1>
+            <button class="btn_colr" onclick="rndBGColor(this)">Random Colour</button>
+            <button class="btn_font" onclick="rndFont(this)">Random Font</button>
+        </nav>
+
+        <main>
+            <h1>This is Main</h1>
+            <button class="btn_colr" onclick="rndBGColor(this)">Random Colour</button>
+            <button class="btn_font" onclick="rndFont(this)">Random Font</button>
+        </main>
+    </section>
+
+    <footer>
+        <h1>This is a Footer</h1>
+        <button class="btn_colr" onclick="rndBGColor(this)">Random Colour</button>
+        <button class="btn_font" onclick="rndFont(this)">Random Font</button>
+    </footer>
+
+    <script>
+
+        function rndBGColor(el)
+        {
+            const colours = ["Tomato", "Orange", "DodgerBlue", "MediumSeaGreen", "SlateBlue", "Violet"];
+
+            let currElement = el.parentElement;
+            let rdnColour = colours[Math.floor(Math.random() * colours.length)];
+
+            currElement.style.backgroundColor = rdnColour;
+        }
+
+        function rndFont(el)
+        {
+            const fonts = ["cursive", "fantasy", "monospace", "sans-serif", "serif"];
+
+            let currElement = el.parentElement;
+            let rdnFont = fonts[Math.floor(Math.random() * fonts.length)];
+
+            currElement.style.fontFamily = rdnFont;
+        }
+    
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,175 @@
+:root {
+    /* Sky Gradients */
+    --sunrise-sky:  linear-gradient(to bottom, #757abf 0%, #8583be 60%,#eab0d1 100%);
+    --midday-sky:   linear-gradient(to bottom, #9be2fe 0%, #67d1fb 100%);
+    --sunset-sky:   linear-gradient(to bottom, #1e528e 0%, #728a7c 50%,#e9ce5d 100%);
+    --night-sky:    linear-gradient(to bottom, #090401 50%,#4B1D06 100%);
+    --midnight-sky: linear-gradient(to bottom, #090401 50%,#4B1D06 100%);
+
+    --fade: 2.5s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    min-height: 500px;
+    min-width: 700px;
+    position: relative;
+    overflow: hidden;
+}
+
+section {
+    width: 100%;
+}
+
+#sky {
+    height: 85%;
+    z-index: 100;
+}
+
+#sun, #moon, #ocean #sun, #ocean #moon {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    z-index: 125;
+    transition: all var(--fade) ease;
+}
+
+#ocean #sun, #ocean #moon {
+    top: -100px;
+}
+
+#sun {
+    background-color: #fff2ab;
+    box-shadow: 0px 0px 40px 15px #fff2ab;  
+}
+
+#ocean #sun {
+    background-color: #fff2ab;
+    box-shadow: 0px 0px 70px 65px #fff2ab;
+}
+
+#moon {
+    background-color: #FFF;
+    box-shadow: 0px 0px 40px 15px white;  
+}
+
+#ocean #moon {
+    background-color: #FFF;
+    box-shadow: 0px 0px 40px 15px white;  
+}
+
+#buildings {
+    position: absolute;
+    bottom: 15%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 600px;
+
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    z-index: 150;
+}
+
+#buildings div {
+    display: inline-block;
+    width: 100px;
+    transition: all var(--fade) ease;
+}
+
+#buildings div:nth-child(even) {
+    background-color: lightgray;
+    height: 160px;
+}
+
+#buildings div:nth-child(odd) {
+    background-color: gray;
+    height: 120px;
+}
+
+#ocean {
+    position: relative;
+    height: 15%;
+    background-color: #43B0FF;
+    z-index: 200;
+    overflow: hidden;
+}
+
+#buttons {    
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 200px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    z-index: 9999;
+}
+
+a {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    font-family: "helvetica";
+    text-decoration: none;
+    text-align: center;
+    text-transform: uppercase;
+    color: #FFF;
+    background-color: #222;
+    border-radius: 50%;
+    padding: 7px;
+}
+
+
+/* Sunrise */
+body.sunrise #sky       { background: var(--sunrise-sky) }
+body.sunrise #sun       { top: 55%; left: 0; }
+body.sunrise #ocen #sun { left: 0; }
+body.sunrise #moon      { top: 110%; left: 110%; }
+body.sunrise #buildings div { filter: brightness(70%); }
+body.sunrise #ocean     { background: #106fb5}
+
+/* Midday */
+body.midday #sky       { background: var(--midday-sky) }
+body.midday #sun       { top: 5%; left: 40%; }
+body.midday #ocen #sun { left: 40%; }
+body.midday #moon      { display: none; }
+body.midday #buildings div { filter: brightness(100%); }
+body.midday #ocean     { background: #106fb5}
+
+/* Sunset */
+body.sunset #sky       { background: var(--sunset-sky) }
+body.sunset #sun       { top: 55%; left: 80%; }
+body.sunset #ocen #sun { left: 80%; }
+body.sunset #moon      { top: 110%; left: -10%; }
+body.sunset #buildings div { filter: brightness(70%); }
+body.sunset #ocean     { background: #106fb5}
+
+/* Night */
+body.night #sky       { background: var(--night-sky) }
+body.night #sun       { top: 110%; left: 110%; }
+body.night #ocen #sun { left: 110%; }
+body.night #moon      { top: 55%; left: 0; }
+body.night #buildings div { filter: brightness(30%); }
+body.night #ocean     { background: #106fb5}
+
+/* Midnight */
+body.midnight #sky       { background: var(--midnight-sky) }
+body.midnight #sun       { top: 110%; left: -10%; }
+body.midnight #ocen #sun { left: 0; }
+body.midnight #moon      { top: 5%; left: 40%; }
+body.midnight #buildings div { filter: brightness(0%); }
+body.midnight #ocean     { background: #106fb5}

@@ -1,0 +1,152 @@
+<!-- 
+CHALLENGE 2: Browser Keypress Counter
+Create a new HTML file that will act as a specific style of a keylogger - a keypress counter! 
+It'll track which keys you press and detail how many times you press each key.
+You might need to brush up on event listeners for this one too - see what events exist to cover keyboard presses or user inputs.
+
+2.1 - Core Functionality:
+Whenever a user presses a key on their keyboard, you should be able to list that on the screen. 
+Eg. if the user presses "E" on the keyboard, the phrase "E: 1" will appear on the screen. 
+If the user presses E again, the phrase changes to "E: 2" and the number will keep on rising as the user presses E.
+The page shouldn't show a new "E: 1" every time you press E -- a new line should only appear for each unique key.
+Eg. if the user presses "A" on the keyboard, the screen should show: 
+E: 2
+A: 1 
+
+The big trick for this challenge: the keys & the number of times they've been pressed should be saved to cookies.
+When you close the page and reopen it, the page should be able to load up existing data and pick up from where the user left off.
+
+2.2 - Expiration
+Keypress information should only be saved for 10 seconds. 
+Any keypress entry older than 10 seconds should be deleted & not shown.
+If the entry is being shown on the page and then expires, it should be removed from the page.
+Hint: Updating the page content at an interval might be handy here.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            width: 700px;
+            margin: auto;
+        }
+
+        div {
+            min-width: 50px;
+            height: 55px;
+            border-radius: 5px;
+            border: solid 1px #000;
+            box-shadow: 0 0 3px 3px rgba(255, 255, 255, .7);
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 5px;
+            margin: 5px;
+        }
+
+        div span:nth-child(1) {
+            font-weight: bolder;
+            font-size: 24px;
+        }
+
+        div span:nth-child(2) {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 12px;
+            color: red;
+        }   
+
+    </style>
+</head>
+<body>
+
+    <script>
+
+        let cookies = {};
+        let timerId = null;
+        let timeout = null;
+        let expiryTime = 10;
+        let refreshTime = 1000;
+
+        function addToCookie(char)
+        {
+            if(char === " ") char = "Space";
+            if(char === "=") char = "Equals";
+
+            val = parseInt(cookies[char]);
+
+            if(isNaN(val)) val = 0;
+
+            document.cookie = `${char}=${val += 1};max-age=${expiryTime}`;
+
+            updateCookieObj();
+
+            if(timeout !== null)
+            {
+                clearTimeout(timeout);
+                clearInterval(timerId);
+            }
+            
+            printCookies();
+            timerId = setInterval(() => { printCookies() }, refreshTime);
+            timeout = setTimeout(() => { clearInterval(timerId); timeout = null; }, (expiryTime * 1000) );            
+        }
+
+        function printCookies()
+        {        
+            document.body.innerHTML = "";
+            cookies = {};
+            updateCookieObj();
+
+            for(let cookie in cookies)
+            {
+                let div = document.createElement("div");
+                let char = document.createElement("span");
+                let val = document.createElement("span");
+                
+                char.innerHTML = cookie;
+                val.innerHTML = cookies[cookie];
+
+                div.appendChild(char);
+                div.appendChild(val);
+
+                document.body.appendChild(div);
+            }
+        }
+
+        function updateCookieObj()
+        {
+            document.cookie.split(";").forEach(el => 
+            {
+                if(el === "") return;
+                let [key, val] = el.split("=");
+                cookies[key.trim()] = val.trim();
+            });
+        }
+
+        document.body.onkeydown = e => addToCookie(e.key);
+
+    </script>
+    
+</body>
+</html>

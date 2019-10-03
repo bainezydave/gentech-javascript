@@ -1,0 +1,112 @@
+<!-- Challenge 4:
+1. Provide three buttons, with three different background colours.
+2. Get the user to click on one button.
+3. Store the background color of the button selected in a cookie.
+4. Write the function to get the cookie holding the color value. ( refer to the getCookie code above).
+5. Remove the cookie
+
+Repeat the same with local storage and session storage. -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <style>
+
+        :root {
+            --background: DodgerBlue;
+            --heading: SlateBlue;
+            --border: gold;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--background);
+        }
+
+        section {
+            width: 500px;
+            height: 400px;
+            background-color: #FFF;
+            border: solid 5px var(--border);;
+            border-radius: 20px;
+            box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.5);
+            font-size: 16px;
+            text-align: center;
+        }
+
+        h1 {
+            color: var(--heading);;
+        }
+    </style>
+
+</head>
+<body id="background">
+
+    <section>
+        <h1 id="heading">WEB STORAGE</h1>
+        <div class="row">
+            <div class="input-field col s6">
+                <input value="SlateBlue" element="background" type="text">
+                <label for="background">Background Color</label>
+            </div>
+            <div class="input-field col s6">
+                <input value="DodgerBlue" element="heading" type="text">
+                <label for="heading">Heading Color</label>
+            </div>
+        </div>
+        <button class="btn waves-effect waves-light" type="submit" onclick="setStorageStyles()">Apply</button>
+    </section>
+
+    <script>
+
+        function setStorageStyles()
+        {
+            document.querySelectorAll("input").forEach((input) =>
+            {
+                let id = input.getAttribute("element");
+                let value = input.value;
+
+                window.localStorage.setItem(id, value);
+            })
+
+            applyStorageStyles();
+        }
+
+        function applyStorageStyles()
+        {
+            let root = document.documentElement;
+
+            Object.keys(localStorage).forEach(item =>
+            {
+                root.style.setProperty(item, localStorage.getItem(item));
+            });
+        }
+
+        applyStorageStyles();
+        
+    
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>

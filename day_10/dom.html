@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        
+        .blue {
+            color: blue;
+        }
+    
+    </style>
+</head>
+<body>
+
+    <h1>Welcome</h1>
+    <p>Understanding DOM</p>
+    <div>
+        <ul>
+            <li>Add DOM Elements</li>
+            <li>Query DOM Elements</li>
+            <li>Chnage DOM Elements</li>
+            <li>Remove DOM Elements</li>
+        </ul>
+    </div>
+    
+
+    <script>
+        let myDiv = document.createElement("div");
+        let myP = document.createElement("p");
+        
+        myP.innerHTML = "DOM Manipulation is something.";
+        myDiv.appendChild(myP);
+        
+        document.body.appendChild(myDiv);
+
+
+        // Querying DOM Elements
+
+        let myUl = document.querySelector("ul");
+
+        let myLi = document.createElement("li");
+
+        myLi.innerHTML = "rervef"
+
+        myUl.appendChild(myLi);
+
+
+        // Add styling to H1
+        var title = document.querySelector("h1");
+
+        title.classList.add("blue");
+
+        title.style.color = "red";
+        title.style.textAlign = "center";
+        title.classList.remove("blue");
+
+
+        // Difference between querySelectorAll and getElementsByTagName
+        let li1 = document.querySelectorAll("li");
+        let li2 = document.getElementsByTagName("li");
+
+        let newLi = document.createElement("li");
+        newLi.innerHTML = "erjvkrvhhgerkhgkerhg"
+        myUl.appendChild(newLi);
+
+
+        newLi.remove();
+
+        console.table(li1);
+        console.table(li2);
+    
+    </script>
+</body>
+</html>

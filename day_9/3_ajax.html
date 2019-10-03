@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <button id="button1" onclick="getUserName1()">Method 1</button>
+    <button id="button2" onclick="getUserName2()">Method 2</button>
+
+    <script>
+
+        let url = "https://randomuser.me/api/";
+
+// =================== Method 1 =============================
+
+        function getUserName1()
+        {
+            // Make XHR Object
+            let request = new XMLHttpRequest();
+
+            // Initialize the request
+            request.open(
+                "GET",
+                url,
+                true
+            )
+
+            // Send the request
+            request.send();
+
+            // On Success
+            request.onload = () =>
+            {
+                let data = JSON.parse(request.response);
+                console.log(data.results[0].name.first);
+            }
+
+            // On Error
+            request.onerror = (err) =>
+            {
+                console.log(err);
+            }
+        }
+
+// =================== Method 2 =============================
+
+        let util = {};
+
+        util.get = (url, callback) => 
+        {
+            const http = new XMLHttpRequest();
+            http.open("GET", url);
+            http.send();
+            http.onload = () =>
+            {
+                let result = JSON.parse(http.responseText);
+                if (typeof callback === 'function') 
+                {
+                    callback(result);
+                }
+            }
+            http.onerror = (error) =>
+            {
+                console.log(error)
+            }
+        };
+
+        function getUserName2()
+        {
+            util.get(url, data => console.log(data.results[0].name.first));
+        }
+    
+    </script>
+    
+</body>
+</html>
+

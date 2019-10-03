@@ -1,0 +1,81 @@
+<!-- /*
+CHALLENGE 3: Dad Joke Callback 
+​
+3.1: Escaping Callback Hell, Again 
+Take the code below and modify it so that it prints out all jokes in the jokes array. 
+​
+3.2: Updating The Page 
+Use JavaScript's "document.getElementById()" and "innerHTML" to put one joke into each of the headings provided below as well.
+You might have to read some documentation online to get the hang of this one! 
+​
+*/ -->
+<!DOCTYPE html>
+<html>
+<head>
+    <script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>
+</head>
+<body>
+    <h1 id="dadJoke1"></h1>
+    <h2 id="dadJoke2"></h2>
+    <h3 id="dadJoke3"></h3>
+    <h4 id="dadJoke4"></h4>
+    <h5 id="dadJoke5"></h5>
+​
+</body>
+<script>
+    let jokes = [];
+    // $.getJSON("https://icanhazdadjoke.com/", (dadJoke) => {
+    //   jokes.push(dadJoke.joke);
+    //   console.log("First joke: " + dadJoke.joke);
+    // });
+    // $.getJSON("https://icanhazdadjoke.com/", (dadJoke) => {
+    //   jokes.push(dadJoke.joke);
+    //   console.log("Second joke: " + dadJoke.joke);
+    // });
+    // $.getJSON("https://icanhazdadjoke.com/", (dadJoke) => {
+    //   jokes.push(dadJoke.joke);
+    //   console.log("Third joke: " + dadJoke.joke);
+    // });
+    // $.getJSON("https://icanhazdadjoke.com/", (dadJoke) => {
+    //   jokes.push(dadJoke.joke);
+    //   console.log("Fourth joke: " + dadJoke.joke);
+    // });
+    // $.getJSON("https://icanhazdadjoke.com/", (dadJoke) => {
+    //   jokes.push(dadJoke.joke);
+    //   console.log("Fifth joke: " + dadJoke.joke);
+    // });
+    // console.log("Jokes",jokes)
+
+ 
+
+    function getDadJokes(num, callback, jokes = []) 
+    {
+        let url = "https://icanhazdadjoke.com/"
+
+        $.getJSON(url, (dadJoke) => 
+        {
+            jokes.push(dadJoke.joke);
+
+            if (num === jokes.length) 
+            {
+                return callback(jokes);
+            }
+
+            return getDadJokes(num, callback, jokes);
+        });
+    }
+
+    getDadJokes(5, data => 
+    {
+        console.log(data)
+        document.getElementById("dadJoke1").innerHTML = data[0];
+        document.getElementById("dadJoke2").innerHTML = data[1];
+        document.getElementById("dadJoke3").innerHTML = data[2];
+        document.getElementById("dadJoke4").innerHTML = data[3];
+        document.getElementById("dadJoke5").innerHTML = data[4];
+    });
+
+</script>

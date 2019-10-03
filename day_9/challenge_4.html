@@ -1,0 +1,77 @@
+<!--
+CHALLENGE 4: NASA Astronomy Photo of the Day API
+
+This is getting towards editing content on the webpage - don't worry about this unless you're really looking for things to do.
+We'll cover this sort of content as a class next week!
+
+4.1 - Core Functionality: 
+Go to the NASA API website here: https://api.nasa.gov/api.html#apod
+Do whatever needs to be done to get an API key (usually make an account or enter your email address somewhere).
+Store that API key somewhere handy.
+
+In a HTML file, write some code that will grab the current photo from the APOD API and set it as the page's background. 
+
+4.2 - More Data!:
+Use at least 3 of the other NASA APIs to show some cool space data on the web page as well.
+Showing data on top of a photo will probably require some decent CSS styling so it's all readable - brush up on your CSS!
+
+4.3 - More Photos!:
+Use the NASA Image & Video Library API and the NASA Mars Rover Photos API to pull a new image and set it as the background of the page when the user clicks on a button on the page.
+APIs are here:
+- https://api.nasa.gov/api.html#Images 
+- https://api.nasa.gov/api.html#MarsPhotos
+
+Use a Promise race here - you should call both APIs and only use the first image that comes back.
+*/ -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>NASA API</title>
+    <style>
+        
+        body{
+            background-size: cover;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <button onclick="newBackground()">New Background</button>
+
+    <script>        
+        let util = {};
+
+        util.get = (url, callback) =>
+        {
+            const apiKey = "api_key=62fnaOihhGp0aX8ZYJQpDDzNJq9QlTjgjPdW7Dtv";
+
+            fetch(url + apiKey)
+                .then(res => res.json())
+                .then(data => {
+                    if (typeof callback === 'function') callback(data)
+                })
+                .catch(err => console.log(err))
+        }
+
+        util.get("https://api.nasa.gov/planetary/apod?", NASAData);
+
+        function NASAData(data)
+        {
+            let image   = data.url,
+                imageHD = data.hdurl,
+                title   = data.title,
+                date    = data.date,
+                author  = data.copyright,
+                description = data.explanation;
+
+                document.body.style.backgroundImage = `url(${image})`
+        }
+    </script>
+</body>
+</html>

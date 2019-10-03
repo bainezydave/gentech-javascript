@@ -1,0 +1,102 @@
+<!-- /*
+CHALLENGE 1: Quirky Clock
+    You have to create a clock that - instead of telling time - tells you if the time ends on an even number.
+
+    1.1 - Core Functionality
+    Using Date, promises & setTimeout, you need to find out what the current time is and determine if it ends in an even number.
+    Then, build up some suspense! Make the user wait 3 seconds before telling them if the time is even or odd.
+    Use resolve for even, reject for odd.
+
+    1.2 - Showing Suspenseful Build-up
+    See challenge 5 from yesterday -- suspense while waiting/loading still means you need to show some loading progression dots or loading bar to the user!
+    So, while you're making the user wait 3 seconds before telling them if the time ends in an even or odd number, show something such as:
+    "Loading..."
+    "Loading...."
+    "Loading....."
+    "Loading......"
+    "The time ends in an EVEN number!"
+*/ -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        #loading {
+            font-family: "Helvetica", fantasy;
+            font-size: 200px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loading"></div>
+
+<script>
+
+    let loading = true;
+    let page = document.getElementById("loading");
+    let f = ['🕐','🕑','🕒','🕓','🕔','🕕','🕖','🕗','🕘','🕙','🕚','🕛'];
+    let g = ["Even", "Odd"];
+
+    function loop() {
+        if (loading === false) return;
+        location.hash = f[Math.floor((Date.now()/100)%f.length)];
+        page.innerHTML = g[Math.floor((Date.now()/150)%g.length)];
+        setTimeout(loop, 50);
+    }
+    loop();
+
+    function time()
+    {
+        let newDate = new Date(),
+            seconds = newDate.getSeconds();
+        
+        return new Promise((res, rej) => 
+        {
+            if (seconds % 2 == 0)
+            {
+                res("The seconds are Even \n" + newDate);
+            } else
+            {
+                rej("The seconds are Odd \n" + newDate);
+            }
+        });
+    }
+
+    time()
+        .then(even =>
+        {
+            setTimeout(function ()
+            {
+                loading = false;
+                location.hash = "";
+                page.innerHTML = "Even";
+                console.log(even);
+            }, 3000);
+        })
+        .catch(odd =>
+        {
+            setTimeout(function ()
+            {
+                loading = false;
+                window.location.hash = "";
+                page.innerHTML = "Odd";
+                console.log(odd);
+            }, 3000);
+        });
+
+</script>
+
+</body>
+</html>
+
+
+            
+
+

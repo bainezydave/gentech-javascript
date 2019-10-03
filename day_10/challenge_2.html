@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 28px;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        #timer,
+        #motivations,
+        #endMsg  {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <!-- CHALLENGE 2: Event Excitement
+
+    Check out this page for a list of all events you can respond to or watch with Javascript:
+    https://www.w3schools.com/jsref/dom_obj_event.asp
+
+    This "challenge" is a bunch of mini-challenges based on some of the events you can use from that page. 
+    If you get stuck on one, leave it & try another. Come back to tricky challenges later.
+    Good luck!
+
+    2.1 - Even Milliseconds Spacebar
+    The page should tell the user about this game & to press the spacebar.
+    The game is this:
+    The player has to thold down the spacebar to start the game.
+    If they let go of the spacebar when the current time's milliseconds value is an even number, they win. If it's odd, they lose.
+    While they hold down the spacebar, cycle through some messages. You could tease them or encourage them.
+    While they hold down the spacebar, also show the current time with milliseconds visible. 
+    When they let go of the spacebar, tell the user what the current time is & if they won or lost. -->
+
+        <h1 id="startMsg">Press 'Space' to begin</h1>
+        <span id="startDesc">If you land on an even number you win. Otherwise, you suck.</span>
+        <h1 id="timer">000</h1>
+        <h1 id="motivations"></h1>
+        <h1 id="endMsg">You Suck!</h1>
+        <script>
+            
+            let time = null;
+            let running = false;
+            let timerCountdown = null;
+
+            let startMsg  = document.getElementById("startMsg");
+            let startDesc = document.getElementById("startDesc");
+            let endMsg    = document.getElementById("endMsg");
+            let elTimer   = document.getElementById("timer");
+            let motivation= document.getElementById("motivations");
+            let messages  = [
+                "Do or do not, ther is no try", 
+                "You will never fail, you will only succeed or learn", 
+                "Do today or never.", 
+                "The more work you do now the less work you have to do tomorrow.", 
+                "Never eat room temp food, Derek!"
+            ];
+
+            function keyEvents()
+            {
+                document.body.onkeydown = function(e){
+                if(!running && e.key === " ") beginGame();
+                    running = true;
+                }
+
+                document.body.onkeyup = function(e){
+                    if(e.key === " ") endGame();
+                    running = false;
+                }
+            }
+
+            function timer()
+            {
+                time = new Date().getMilliseconds();
+                elTimer.innerHTML = time;
+            }
+
+            function beginGame()
+            {
+                timerCountdown = setInterval(timer, 10);
+                startMsg.style.display = "none";
+                startDesc.style.display = "none";
+                elTimer.style.display = "initial";
+                motivation.style.display = "initial";
+
+                setInterval(() => 
+                {
+                    let rdnMsg = messages[Math.floor(Math.random() * messages.length)];
+
+                    motivation.innerHTML = rdnMsg
+
+                }, 1000)
+            }
+
+            function endGame()
+            {
+                clearInterval(timerCountdown);
+
+                if(time % 2 === 0)
+                {
+                    endMsg.innerHTML = "You Win!";
+                } else
+                {
+                    endMsg.innerHTML = "You Suck!";
+                }
+
+                endMsg.style.display = "initial";
+                motivation.style.display= "none";
+
+                document.body.onkeydown = null;
+                document.body.onkeyup = null;
+
+                timeout = setTimeout(() =>
+                {
+                    startMsg.style.display  = "initial";
+                    startDesc.style.display = "initial";
+                    elTimer.style.display   = "none";
+                    endMsg.style.display    = "none";
+                    keyEvents();
+                }, 2000)
+            }
+
+            keyEvents();
+
+        </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!-- 
+CHALLENGE 1: Module Master
+Solve yesterday's Challenge 2 (the Pokemon API with async & await) but refactor the code so that you have separate files for each of these things:
+- getting data from the Pokemon API
+- creating and adding HTML elements to the webpage 
+Your webpage should be able to call functions from those files to keep everything working normally.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./getPokemon.js"></script>
+</head>
+<body>
+
+    <ul></ul>
+
+    <script>
+//     CHALLENGE 1: Module Master
+//     Solve yesterday's Challenge 2 (the Pokemon API with async & await) but refactor the code so that you have separate files for each of these things:
+//     - getting data from the Pokemon API
+//     - creating and adding HTML elements to the webpage 
+//     Your webpage should be able to call functions from those files to keep everything working normally.
+        
+        async function getPokemonTeam(teamSize) 
+        {
+            var pokemonTeamData = [];
+            var ulElem = document.querySelector("ul");
+
+            for (var i = 0; i < teamSize; i++)
+            {
+                pokemonTeamData.push(await util.getPokemon());
+            }
+
+            for (pokemon in pokemonTeamData)
+            {
+                var newListItem = document.createElement("li");
+                newListItem.innerHTML = pokemonTeamData[pokemon].name;
+                ulElem.appendChild(newListItem);
+            }
+        }
+
+        getPokemonTeam(parseInt(prompt("How many Pokemon would you like to see?"))); 
+    
+    </script>
+    
+</body>
+</html>

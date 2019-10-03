@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <button id="button" onclick="chuckJokes()">Get Jokes</button>
+        <script>
+
+            let jokes = [];
+
+            const getJoke = async () =>
+            {
+                const response = await fetch("https://api.chucknorris.io/jokes/random");
+                const result = await response.json();
+                return result.value;
+            };
+            
+            async function chuckJokes()
+            {
+                for(let i = 0; i < 5; i++)
+                {
+                    let joke = null;
+                    try 
+                    {
+                        joke = await getJoke();
+                    } catch(e) 
+                    {
+                        joke = e;
+                    }
+                    
+                    jokes.push(joke)
+                }
+                console.table(jokes);
+            }
+
+        </script>
+    </body>
+
+ </html>
